@@ -181,8 +181,9 @@
     .about-photo{width:140px}
   }
   /* ---------- boot / loading screen ---------- */
-  body.is-booting #app{opacity:0;visibility:hidden;pointer-events:none}
-  body.is-booting{cursor:default}
+  body.is-booting #app,
+  body.is-mic-gate #app{opacity:0;visibility:hidden;pointer-events:none}
+  body.is-booting,body.is-mic-gate{cursor:default}
   #boot{
     position:fixed;inset:0;z-index:100;
     background:#000;color:#cfd8d3;
@@ -213,11 +214,84 @@
   }
   .boot-start button:hover{background:#e8f0eb;color:#05070d;transform:translateY(-1px)}
   .boot-start button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-  #app{position:relative;z-index:4;height:100%;opacity:1;visibility:visible;transition:opacity .6s ease .15s}
+
+  /* ---------- mic gate (after START) ---------- */
+  #micGate{
+    position:fixed;inset:0;z-index:90;
+    display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(ellipse at 50% 42%, rgba(95,227,192,.12), transparent 42%),
+      radial-gradient(ellipse at 50% 100%, rgba(0,0,0,.55), transparent 50%),
+      #05070d;
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .55s ease, visibility .55s;
+    overflow:hidden;
+  }
+  body.is-mic-gate #micGate{opacity:1;visibility:visible;pointer-events:auto}
+  #micGate.is-done{opacity:0;visibility:hidden;pointer-events:none}
+  .mic-stage{
+    position:relative;display:flex;flex-direction:column;align-items:center;gap:28px;
+    transform:scale(.92);opacity:0;
+    transition:transform 1.35s cubic-bezier(.2,.7,.1,1), opacity .5s ease;
+  }
+  body.is-mic-gate #micGate.is-ready .mic-stage{transform:scale(1);opacity:1}
+  #micGate.is-entering .mic-stage{
+    transform:scale(22) translateY(8%);
+    transition:transform 1.35s cubic-bezier(.45,0,.2,1);
+  }
+  #micGate.is-entering .mic-hint,
+  #micGate.is-entering .mic-rings{opacity:0;transition:opacity .25s}
+  #micGate.is-entering::after{
+    content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+    background:radial-gradient(circle at 50% 46%, transparent 0%, transparent 8%, #000 42%, #000 100%);
+    opacity:0;animation:micSuck 1.35s ease forwards;
+  }
+  @keyframes micSuck{
+    0%{opacity:0}
+    45%{opacity:.35}
+    100%{opacity:1}
+  }
+  .mic-btn{
+    position:relative;border:0;background:transparent;cursor:pointer;padding:24px;
+    border-radius:50%;isolation:isolate;
+  }
+  .mic-btn:focus-visible{outline:2px solid var(--accent);outline-offset:8px}
+  .mic-btn:hover .mic-body{filter:brightness(1.12) drop-shadow(0 0 28px rgba(95,227,192,.35))}
+  .mic-btn:hover .mic-rings span{animation-duration:.9s}
+  .mic-rings{
+    position:absolute;inset:50% auto auto 50%;width:0;height:0;pointer-events:none;z-index:0;
+  }
+  .mic-rings span{
+    position:absolute;left:0;top:0;width:120px;height:120px;margin:-60px;
+    border:1px solid rgba(95,227,192,.35);border-radius:50%;
+    animation:ringPulse 2.4s ease-out infinite;
+  }
+  .mic-rings span:nth-child(2){animation-delay:.55s;width:170px;height:170px;margin:-85px}
+  .mic-rings span:nth-child(3){animation-delay:1.1s;width:220px;height:220px;margin:-110px}
+  @keyframes ringPulse{
+    0%{transform:scale(.55);opacity:.7}
+    100%{transform:scale(1.35);opacity:0}
+  }
+  .mic-body{
+    position:relative;z-index:1;width:min(220px,46vw);height:auto;display:block;
+    filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));
+    transition:filter .25s, transform .25s;
+  }
+  .mic-btn:active .mic-body{transform:scale(.97)}
+  .mic-hint{
+    text-align:center;color:var(--dim);font:13px/1.6 var(--mono);letter-spacing:.04em;
+    transition:opacity .3s;
+  }
+  .mic-hint b{color:var(--fg);font-weight:500}
+  .mic-hint .blink{display:inline-block;width:8px;height:14px;background:var(--accent);margin-left:6px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+
+  #app{position:relative;z-index:4;height:100%;opacity:1;visibility:visible;transition:opacity .55s ease .05s}
 
   @media (prefers-reduced-motion:reduce){
     .cursor{animation:none}
-    .card,.page,#boot,#app{transition:none}
+    .card,.page,#boot,#app,#micGate,.mic-stage{transition:none}
+    .mic-rings span{animation:none;opacity:.25}
+    #micGate.is-entering::after{animation:none;opacity:1}
   }
 </style>
 </head>
@@ -233,6 +307,46 @@
       <p>Click start to begin</p>
       <button type="button" id="startBtn">START</button>
     </div>
+  </div>
+</div>
+
+<div id="micGate" aria-hidden="true">
+  <div class="mic-stage">
+    <button class="mic-btn" id="micBtn" type="button" aria-label="Click the microphone to enter">
+      <div class="mic-rings" aria-hidden="true"><span></span><span></span><span></span></div>
+      <svg class="mic-body" viewBox="0 0 200 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="micMetal" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#d7e3ea"/>
+            <stop offset="45%" stop-color="#8fa3b0"/>
+            <stop offset="100%" stop-color="#4d5d68"/>
+          </linearGradient>
+          <linearGradient id="micHead" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a343d"/>
+            <stop offset="100%" stop-color="#0d1218"/>
+          </linearGradient>
+          <radialGradient id="micGlow" cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#5fe3c0" stop-opacity=".35"/>
+            <stop offset="100%" stop-color="#5fe3c0" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="100" cy="108" rx="78" ry="78" fill="url(#micGlow)"/>
+        <rect x="88" y="210" width="24" height="90" rx="6" fill="url(#micMetal)"/>
+        <path d="M60 210 h80 v18 c0 28-18 48-40 48s-40-20-40-48z" fill="url(#micMetal)" opacity=".9"/>
+        <rect x="55" y="292" width="90" height="14" rx="4" fill="#2b353e"/>
+        <ellipse cx="100" cy="312" rx="48" ry="10" fill="#1a2229"/>
+        <rect x="42" y="40" width="116" height="170" rx="58" fill="url(#micHead)" stroke="#5fe3c0" stroke-opacity=".35" stroke-width="2"/>
+        <g fill="none" stroke="#5fe3c0" stroke-opacity=".55" stroke-width="2">
+          <ellipse cx="100" cy="125" rx="38" ry="52"/>
+          <ellipse cx="100" cy="125" rx="24" ry="36"/>
+          <ellipse cx="100" cy="125" rx="12" ry="20"/>
+          <line x1="62" y1="125" x2="138" y2="125"/>
+          <line x1="100" y1="78" x2="100" y2="172"/>
+        </g>
+        <circle cx="100" cy="125" r="7" fill="#5fe3c0"/>
+      </svg>
+    </button>
+    <p class="mic-hint"><b>Click the microphone</b> to enter the lab<span class="blink"></span></p>
   </div>
 </div>
 
@@ -732,7 +846,10 @@ document.getElementById('pulseBtn2').addEventListener('click', () => window.__in
   const startWrap = document.getElementById('bootStart');
   const startBtn = document.getElementById('startBtn');
   const boot = document.getElementById('boot');
+  const micGate = document.getElementById('micGate');
+  const micBtn = document.getElementById('micBtn');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let entering = false;
 
   const lines = [
     'Minjun Kim Runtime · Anomalous Sound Detection',
@@ -748,24 +865,56 @@ document.getElementById('pulseBtn2').addEventListener('click', () => window.__in
     'Loaded interactive HUD ............... 89%',
     'Loaded portfolio pages ............... 100%',
     '',
-    'Press ESC to skip · ENTER / START to enter lab',
+    'Press ESC to skip · ENTER / START to continue',
   ];
 
-  function enterSite() {
-    document.body.classList.remove('is-booting');
+  function revealApp() {
+    document.body.classList.remove('is-booting', 'is-mic-gate');
     boot.classList.add('is-done');
     boot.setAttribute('aria-hidden', 'true');
+    micGate.classList.add('is-done');
+    micGate.setAttribute('aria-hidden', 'true');
     if (typeof window.__startTerminal === 'function') window.__startTerminal();
-    startBtn.blur();
   }
 
-  startBtn.addEventListener('click', enterSite);
+  function showMicGate() {
+    if (entering) return;
+    startBtn.blur();
+    boot.classList.add('is-done');
+    boot.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('is-booting');
+    document.body.classList.add('is-mic-gate');
+    micGate.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => micGate.classList.add('is-ready'));
+    setTimeout(() => micBtn.focus(), 400);
+  }
+
+  function enterThroughMic() {
+    if (entering) return;
+    entering = true;
+    if (reduce) {
+      revealApp();
+      return;
+    }
+    micGate.classList.add('is-entering');
+    setTimeout(revealApp, 1350);
+  }
+
+  startBtn.addEventListener('click', showMicGate);
+  micBtn.addEventListener('click', enterThroughMic);
+
   addEventListener('keydown', (e) => {
-    if (!document.body.classList.contains('is-booting')) return;
-    if (e.key === 'Escape') enterSite();
-    if ((e.key === 'Enter' || e.key === ' ') && startWrap.classList.contains('is-ready')) {
-      e.preventDefault();
-      enterSite();
+    if (document.body.classList.contains('is-booting')) {
+      if (e.key === 'Escape') { e.preventDefault(); showMicGate(); }
+      if ((e.key === 'Enter' || e.key === ' ') && startWrap.classList.contains('is-ready')) {
+        e.preventDefault();
+        showMicGate();
+      }
+      return;
+    }
+    if (document.body.classList.contains('is-mic-gate')) {
+      if (e.key === 'Escape') { e.preventDefault(); enterThroughMic(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enterThroughMic(); }
     }
   });
 
