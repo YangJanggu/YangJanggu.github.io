@@ -1,62 +1,576 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- EDIT: 브라우저 탭 제목과 검색 설명 -->
-  <title>Your Name — Research & Ideas</title>
-  <meta name="description" content="A personal portfolio for research, projects, and publications.">
-  <style>
-    :root{--ink:#183b30;--paper:#f6f5ee;--muted:#63736a;--line:#d8ded4;--accent:#c7e29d}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.7 Arial,'Noto Sans KR',sans-serif}a{color:inherit}a:focus-visible,button:focus-visible{outline:3px solid #c6a94c;outline-offset:6px}.skip{position:fixed;top:-90px;left:20px;z-index:99;background:white;padding:10px}.skip:focus{top:10px}
-    header{position:fixed;inset:0 0 auto;z-index:10;background:rgba(13,41,29,.94);color:#fff}nav{max-width:1200px;margin:auto;height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 36px}.brand{text-decoration:none;font:bold 20px Georgia,serif;letter-spacing:.03em}.links{display:flex;gap:35px}.links a{text-decoration:none;font-size:15px;padding:7px 0;border-bottom:2px solid transparent}.links a:hover,.links a[aria-current]{border-color:var(--accent);color:var(--accent)}
-    .hero{height:100svh;min-height:660px;position:relative;color:white;isolation:isolate;display:flex;align-items:flex-end;padding:140px max(7vw,28px) 110px;background:#143927}.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% center;z-index:-2}.hero:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(4,28,17,.52),transparent 85%),linear-gradient(0deg,rgba(4,28,17,.5),transparent 70%)}.hero-copy{max-width:640px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:bold}.hero h1{font:clamp(48px,7.5vw,100px)/1.08 Georgia,serif;margin:22px 0}.hero p{font-size:clamp(17px,2vw,23px);max-width:520px;color:#edf4e3}.hero .button{display:inline-block;text-decoration:none;border:1px solid #c8d6b7;padding:10px 22px;margin-top:20px;font-size:14px;background:rgba(12,39,25,.45)}.button:hover{background:#244b38}.down{position:absolute;bottom:30px;left:max(7vw,28px);font-size:12px;letter-spacing:.12em;text-decoration:none}
-    .section{max-width:1120px;margin:auto;padding:105px 36px}.section h2{font:clamp(36px,5vw,57px)/1.15 Georgia,serif;font-weight:normal;margin:15px 0 28px}.section p{color:var(--muted)}.about{display:grid;grid-template-columns:1fr 1.5fr;gap:70px}.about p{margin:0 0 22px}.tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}.tags span{border:1px solid var(--line);padding:5px 13px;font-size:13px}.projects-wrap{background:#e9eee5}.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px}.section-head p{font-size:14px;max-width:340px}.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}.project{border-top:2px solid #809e73;padding-top:20px}.number{font:italic 30px Georgia,serif;color:#68835f}.project h3{font:26px/1.3 Georgia,serif;margin:23px 0 14px}.project p{font-size:15px}.type{font-size:11px;text-transform:uppercase;letter-spacing:.12em}.publications{list-style:none;margin:36px 0 0;padding:0}.publications li{display:grid;grid-template-columns:85px 1fr;gap:25px;border-top:1px solid var(--line);padding:28px 0}.year{font:24px Georgia,serif}.publications h3{font:24px/1.4 Georgia,serif;margin:0 0 9px}.publications p{font-size:14px;margin:0}.note{font-size:13px;color:var(--muted)}footer{background:#15392c;color:#e2eadc;padding:45px 36px}.footer-inner{max-width:1048px;margin:auto;display:flex;justify-content:space-between;gap:22px;font-size:13px}footer p{margin:0}footer a{text-underline-offset:4px}
-    @media(max-width:700px){nav{padding:0 20px;height:70px}.brand{font-size:17px}.links{gap:14px}.links a{font-size:12px}.hero{min-height:700px;padding:140px 25px 100px}.hero img{object-position:70% center}.hero:after{background:linear-gradient(0deg,rgba(4,28,17,.92),rgba(4,28,17,.05) 80%)}.hero h1{font-size:54px}.hero p{max-width:310px}.section{padding:70px 25px}.about{grid-template-columns:1fr;gap:12px}.section-head{display:block}.projects{grid-template-columns:1fr;gap:32px}.publications li{grid-template-columns:55px 1fr;gap:15px}.publications h3{font-size:21px}.footer-inner{flex-direction:column}.down{left:25px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YangJanggu · Anomalous Sound Detection</title>
+<meta name="description" content="Research portfolio on anomalous sound detection and machine listening.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05070d;
+    --fg:#d7e3ea;
+    --dim:#7d8fa0;
+    --faint:#3a4a5a;
+    --accent:#5fe3c0;
+    --alert:#ff3b4a;
+    --panel:rgba(6,10,18,.72);
+    --line:rgba(95,227,192,.18);
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  #spec,#marks{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  #marks{z-index:3;pointer-events:none}
+  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(5,7,13,.92) 0%, rgba(5,7,13,.55) 45%, rgba(5,7,13,.18) 100%),
+      linear-gradient(180deg, rgba(5,7,13,.2) 0%, rgba(5,7,13,.55) 100%);}
+  .scan{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.07;
+    background:repeating-linear-gradient(0deg,#000 0 1px,transparent 1px 3px)}
+
+  .hud{position:fixed;top:72px;right:24px;z-index:5;font-size:11px;color:var(--dim);text-align:right;line-height:1.6;
+       background:rgba(5,7,13,.55);border:1px solid var(--line);padding:10px 12px;border-radius:4px;backdrop-filter:blur(2px)}
+  .hud b{color:var(--fg);font-weight:500}
+  .status{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);letter-spacing:.08em}
+  .status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+  .status.anom{color:var(--alert)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
+      padding:16px 28px;background:linear-gradient(180deg,rgba(5,7,13,.9),rgba(5,7,13,0))}
+  .logo{color:var(--fg);font-weight:700}
+  .logo .p{color:var(--accent)}
+  nav ul{list-style:none;display:flex;gap:22px;font-size:13px}
+  nav ul a{color:var(--dim)}
+  nav ul a:hover,nav ul a[aria-current]{color:var(--fg);text-decoration:none}
+  nav ul a::before{content:"./";color:var(--faint)}
+
+  main{position:relative;z-index:6}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 8vw 80px;max-width:1100px}
+  .kicker{font-size:12px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:18px}
+  h1{font-size:clamp(34px,5.4vw,64px);line-height:1.08;font-weight:700;letter-spacing:-.02em;margin-bottom:22px}
+  h1 .hl{color:var(--alert);position:relative;white-space:nowrap}
+  h1 .hl::after{content:"";position:absolute;left:-4px;right:-4px;bottom:.06em;height:.12em;background:var(--alert);opacity:.55}
+  .lede{color:var(--dim);max-width:560px;font-size:15px;margin-bottom:34px}
+
+  .term{background:var(--panel);border:1px solid var(--line);border-radius:6px;max-width:620px;
+        box-shadow:0 20px 60px rgba(0,0,0,.45);backdrop-filter:blur(3px)}
+  .term-bar{display:flex;gap:7px;padding:10px 12px;border-bottom:1px solid var(--line);align-items:center}
+  .term-bar i{width:10px;height:10px;border-radius:50%;background:#2a3542}
+  .term-bar i:first-child{background:var(--alert)}
+  .term-bar span{margin-left:auto;font-size:11px;color:var(--faint)}
+  .term pre{padding:16px 18px;font-family:var(--mono);font-size:13px;line-height:1.75;white-space:pre-wrap;min-height:220px}
+  .c-p{color:var(--accent)} .c-d{color:var(--dim)} .c-r{color:var(--alert);font-weight:700} .c-f{color:var(--fg)}
+  .cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+  .btn{border:1px solid var(--line);padding:9px 16px;border-radius:4px;font-size:13px;color:var(--fg);background:rgba(5,7,13,.6);cursor:pointer}
+  .btn:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .btn.primary{background:var(--accent);color:#04120d;border-color:var(--accent);font-weight:700}
+  .btn.primary:hover{color:#04120d;filter:brightness(1.1)}
+
+  section.block{padding:90px 8vw;max-width:1100px}
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:30px}
+  .sec-h .n{color:var(--alert);font-size:13px}
+  .sec-h h2{font-size:24px;font-weight:700}
+  .sec-h .rule{flex:1;height:1px;background:var(--line)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:26px 28px;backdrop-filter:blur(3px)}
+  .panel p{color:var(--fg);max-width:720px}
+  .panel p + p{margin-top:12px}
+  .muted{color:var(--dim)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .tags span{border:1px solid var(--line);padding:4px 10px;font-size:12px;color:var(--accent)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px;backdrop-filter:blur(3px);transition:border-color .2s,transform .2s}
+  .card:hover{border-color:rgba(255,59,74,.55);transform:translateY(-2px);text-decoration:none}
+  .card .tag{font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+  .card h3{font-size:16px;margin:8px 0 6px;color:var(--fg)}
+  .card p{font-size:13px;color:var(--dim)}
+
+  .pubs{list-style:none}
+  .pubs li{display:grid;grid-template-columns:70px 1fr;gap:16px;padding:16px 0;border-bottom:1px dashed var(--line)}
+  .pubs li:last-child{border-bottom:none}
+  .pubs .yr{color:var(--alert);font-size:13px}
+  .pubs .t{font-weight:500}
+  .pubs .v{font-size:13px;color:var(--dim)}
+  .todo{color:#e6b450}
+
+  .demo{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  .demo .meter{margin-top:14px}
+  .meter-bar{height:8px;background:rgba(125,143,160,.2);border-radius:99px;overflow:hidden}
+  .meter-fill{height:100%;width:12%;background:var(--accent);transition:width .25s,background .25s}
+  .meter-fill.hot{background:var(--alert)}
+  .meter-label{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:6px}
+
+  footer{position:relative;z-index:6;padding:40px 8vw 60px;color:var(--faint);font-size:12px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:720px){
+    nav ul{gap:12px;font-size:11px}
+    .hud{display:none}
+    .veil{background:rgba(5,7,13,.78)}
+    .pubs li{grid-template-columns:1fr;gap:4px}
+    .demo{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){.cursor{animation:none}.card{transition:none}}
+</style>
 </head>
 <body>
-<a class="skip" href="#about">Skip to content</a>
-<header><nav aria-label="Main navigation">
-  <!-- EDIT: 이름/이니셜 -->
-  <a class="brand" href="#home">Your Name.</a>
-  <div class="links"><a href="#home" aria-current="location">Home</a><a href="#about">About</a><a href="#project">Project</a><a href="#publication">Publication</a></div>
-</nav></header>
+
+<canvas id="spec" aria-hidden="true"></canvas>
+<div class="veil"></div>
+<div class="scan"></div>
+<canvas id="marks" aria-hidden="true"></canvas>
+
+<div class="hud" aria-hidden="true">
+  <div><span id="status" class="status">NORMAL</span></div>
+  <div>anomaly score <b id="score">0.00</b> / thr <b>0.50</b></div>
+  <div>stft · n_fft <b>1024</b> · hop <b>256</b> · mel <b>128</b></div>
+</div>
+
+<nav>
+  <a class="logo" href="#home"><span class="p">yangjanggu@lab</span>:~$</a>
+  <ul>
+    <li><a href="#home" aria-current="location">home</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#project">project</a></li>
+    <li><a href="#publication">publication</a></li>
+  </ul>
+</nav>
+
 <main>
-  <section class="hero" id="home" aria-labelledby="name">
-    <!-- EDIT: 사진 교체는 assets/turtle-hero.png 파일을 바꾸거나 아래 src 수정 -->
-    <img src="assets/turtle-hero.png" alt="A smiling green cartoon turtle sitting by a sunlit forest pond" fetchpriority="high">
-    <div class="hero-copy"><span class="eyebrow">Welcome to my corner of the world</span><h1 id="name">Your Name</h1><p>Curious minds. Meaningful questions.<br>One small discovery at a time.</p><a class="button" href="#about">A little about me ↗</a></div>
-    <a href="#about" class="down">SCROLL TO EXPLORE ↓</a>
-  </section>
-  <!-- 아래 소개, 프로젝트, 논문은 모두 교체용 예시입니다. -->
-  <section class="section about" id="about" aria-labelledby="about-title">
-    <div><span class="eyebrow">01 / A little introduction</span><h2 id="about-title">About me.</h2></div>
-    <div><p>Hello! I’m <strong>Your Name</strong>, a student and aspiring researcher interested in how data can help us understand the world.</p><p>I enjoy turning interesting questions into thoughtful projects, learning new tools, and sharing what I discover along the way.</p><p>안녕하세요. 이곳에 소속, 관심 분야, 간단한 자기소개를 작성해 주세요. 수업 과제, 연구 활동, 개인 프로젝트 등을 소개할 수 있습니다.</p><div class="tags"><span>Data Science</span><span>Machine Learning</span><span>Creative Projects</span></div></div>
-  </section>
-  <div class="projects-wrap"><section class="section" id="project" aria-labelledby="project-title">
-    <div class="section-head"><div><span class="eyebrow">02 / Ideas in practice</span><h2 id="project-title">Selected projects.</h2></div><p>A few things I’m exploring, building, and learning from.</p></div>
-    <div class="projects">
-      <article class="project"><span class="number">01</span><h3>Making sense<br>of data</h3><span class="type">Example / Data analysis</span><p>Explore a public dataset, ask a clear question, and communicate the findings through simple visualizations.</p></article>
-      <article class="project"><span class="number">02</span><h3>Learning with<br>neural networks</h3><span class="type">Example / Machine learning</span><p>Build a small classification model and investigate what improves its performance and where it makes mistakes.</p></article>
-      <article class="project"><span class="number">03</span><h3>A space for<br>my ideas</h3><span class="type">Example / Web development</span><p>Create a personal website with HTML and CSS, then publish it with GitHub Pages to share projects and interests.</p></article>
+  <header class="hero" id="home">
+    <div class="kicker">// machine listening · anomaly detection</div>
+    <h1>Listening for what<br>sounds <span class="hl">wrong</span>.</h1>
+    <p class="lede">
+      I research <b>anomalous sound detection (ASD)</b> — teaching models to learn what “normal” sounds like,
+      and to flag the moments that don’t fit.
+    </p>
+
+    <div class="term" role="img" aria-label="Terminal running a toy anomaly detector">
+      <div class="term-bar"><i></i><i></i><i></i><span>~/asd — zsh</span></div>
+      <pre id="termout"></pre>
     </div>
-  </section></div>
-  <section class="section" id="publication" aria-labelledby="pub-title">
-    <span class="eyebrow">03 / Writing & research</span><h2 id="pub-title">Publications.</h2><p>Research papers, reports, and other things I’ve written.</p>
-    <p class="note">아래 항목은 형식을 보여주기 위한 가상 예시입니다. 논문이 없으면 수업 보고서나 발표 자료를 적어도 됩니다.</p>
-    <ol class="publications"><li><span class="year">2026</span><div><h3>Your research paper or project report title</h3><p><strong>Your Name</strong>, Coauthor Name</p><p>Journal / Conference / Course report · Example entry</p></div></li><li><span class="year">2025</span><div><h3>Another piece of writing you would like to share</h3><p><strong>Your Name</strong></p><p>Presentation / Technical report · Example entry</p></div></li></ol>
+
+    <div class="cta">
+      <a class="btn primary" href="#about">$ cd about/</a>
+      <a class="btn" href="#project">projects</a>
+      <a class="btn" href="https://github.com/YangJanggu" target="_blank" rel="noopener">github</a>
+      <button class="btn" type="button" id="pulseBtn">trigger anomaly</button>
+    </div>
+  </header>
+
+  <section class="block" id="about">
+    <div class="sec-h"><span class="n">01</span><h2>about</h2><span class="rule"></span></div>
+    <div class="panel">
+      <p>
+        Hi, I’m <b>YangJanggu</b>. My main research focus is <b>anomalous sound detection</b>:
+        finding unusual events in machine and environmental audio, often when only normal data is available for training.
+      </p>
+      <p class="muted">
+        안녕하세요. 저는 정상 소리의 분포를 학습하고, 그로부터 벗어난 이상을 탐지하는 연구를 하고 있습니다.
+        관심 분야는 unsupervised ASD, domain shift, audio representation learning입니다.
+      </p>
+      <div class="tags">
+        <span>Anomalous Sound Detection</span>
+        <span>Machine Listening</span>
+        <span>Self-supervised Audio</span>
+        <span>Domain Shift</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="project">
+    <div class="sec-h"><span class="n">02</span><h2>project</h2><span class="rule"></span></div>
+    <div class="demo" style="margin-bottom:18px">
+      <div class="panel">
+        <div class="tag" style="font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">interactive demo</div>
+        <h3 style="font-size:16px;margin-bottom:8px">Live spectrogram detector</h3>
+        <p class="muted">
+          배경의 합성 스펙트로그램은 정상 기계음(하모닉) 위에 간헐적인 anomaly를 섞습니다.
+          오른쪽 위 HUD의 score가 threshold(0.50)를 넘으면 빨간 구간으로 표시됩니다.
+        </p>
+        <div class="meter">
+          <div class="meter-label"><span>live score</span><span id="meterScore">0.00</span></div>
+          <div class="meter-bar"><div class="meter-fill" id="meterFill"></div></div>
+        </div>
+        <div class="cta" style="margin-top:16px">
+          <button class="btn primary" type="button" id="pulseBtn2">inject anomaly event</button>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="muted" style="font-size:12px;margin-bottom:10px">event types in the toy model</p>
+        <p><b class="c-r">tone</b> · bearing-like tonal burst</p>
+        <p><b class="c-r">impact</b> · periodic broadband clicks</p>
+        <p><b class="c-r">drift</b> · pitch drift of machine hum</p>
+        <p class="muted" style="margin-top:14px;font-size:12px">이 데모는 설명을 위한 toy detector입니다. 실제 모델/데이터는 Project 카드에 연결하세요.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="tag">unsupervised</div>
+        <h3>Anomalous Sound Detection</h3>
+        <p>정상 소리 분포를 학습하고, reconstruction / embedding 거리로 anomaly score를 계산합니다.</p>
+      </div>
+      <div class="card">
+        <div class="tag">robustness</div>
+        <h3>Domain Shift</h3>
+        <p>기계·환경·마이크로폰이 바뀌어도 탐지가 흔들리지 않도록 domain-robust representation을 연구합니다.</p>
+      </div>
+      <div class="card">
+        <div class="tag">representation</div>
+        <h3>Audio Representation Learning</h3>
+        <p>self-supervised / pretrained audio embedding을 ASD downstream에 활용합니다.</p>
+      </div>
+      <a class="card" href="https://github.com/YangJanggu" target="_blank" rel="noopener">
+        <div class="tag">repo</div>
+        <h3><span class="todo">[TODO]</span> asd-baseline</h3>
+        <p>실제 프로젝트 레포 링크와 한 줄 설명을 여기에 넣으세요.</p>
+      </a>
+      <a class="card" href="#home">
+        <div class="tag">web</div>
+        <h3>Interactive portfolio</h3>
+        <p>합성 spectrogram과 toy detector로 ASD 아이디어를 시각화한 개인 홈페이지.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="block" id="publication">
+    <div class="sec-h"><span class="n">03</span><h2>publication</h2><span class="rule"></span></div>
+    <div class="panel">
+      <ul class="pubs">
+        <li>
+          <div class="yr">2026</div>
+          <div>
+            <div class="t"><span class="todo">[TODO]</span> Anomalous Sound Detection paper / report title</div>
+            <div class="v"><b>YangJanggu</b>, Co-author · <i>Venue / Course report</i></div>
+          </div>
+        </li>
+        <li>
+          <div class="yr">2025</div>
+          <div>
+            <div class="t"><span class="todo">[TODO]</span> Presentation or technical report title</div>
+            <div class="v"><b>YangJanggu</b> · <i>Workshop / Class presentation</i></div>
+          </div>
+        </li>
+      </ul>
+      <p class="muted" style="margin-top:12px;font-size:12px">논문이 없으면 수업 보고서·발표 자료로 채워도 됩니다.</p>
+    </div>
   </section>
 </main>
-<footer><div class="footer-inner"><p>© <span id="year">2026</span> Your Name · Personal portfolio</p><a href="#home">Back to top ↑</a></div></footer>
+
+<footer>
+  <span>$ echo "© <span id="year">2026</span> YangJanggu · background: synthetic spectrogram, red bands = frames above threshold"</span>
+  <a href="#home">back to top ↑</a>
+</footer>
+
 <script>
-  document.getElementById('year').textContent=new Date().getFullYear();
-  const links=[...document.querySelectorAll('.links a')];
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id){link.setAttribute('aria-current','location')}else{link.removeAttribute('aria-current')}})}});
-  },{rootMargin:'-20% 0px -55% 0px',threshold:0});
-  document.querySelectorAll('main section[id]').forEach(section=>observer.observe(section));
+(() => {
+  const cvs = document.getElementById('spec');
+  const ctx = cvs.getContext('2d');
+  const mcv = document.getElementById('marks');
+  const mctx = mcv.getContext('2d');
+  const statusEl = document.getElementById('status');
+  const scoreEl = document.getElementById('score');
+  const meterScore = document.getElementById('meterScore');
+  const meterFill = document.getElementById('meterFill');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const COL_W = 3;
+  const BINS = 128;
+  const THR = 0.5;
+  const RED = [255, 59, 74];
+
+  const STOPS = [
+    [0.00, [4, 7, 16]],
+    [0.30, [12, 30, 62]],
+    [0.55, [18, 88, 118]],
+    [0.75, [40, 160, 150]],
+    [0.90, [120, 225, 185]],
+    [1.00, [235, 252, 225]],
+  ];
+  const LUT = new Uint8ClampedArray(256 * 3);
+  for (let i = 0; i < 256; i++) {
+    const t = i / 255;
+    let k = 0; while (k < STOPS.length - 2 && t > STOPS[k + 1][0]) k++;
+    const [t0, c0] = STOPS[k], [t1, c1] = STOPS[k + 1];
+    const u = Math.min(1, Math.max(0, (t - t0) / (t1 - t0)));
+    for (let j = 0; j < 3; j++) LUT[i * 3 + j] = c0[j] + (c1[j] - c0[j]) * u;
+  }
+
+  let W, H, cols, spec, sctx, scores, flags, head = 0, frame = 0;
+  const off = document.createElement('canvas');
+  let forceEvent = false;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    mcv.width = W * dpr; mcv.height = H * dpr;
+    mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(W / COL_W) + 2;
+    off.width = cols; off.height = BINS;
+    sctx = off.getContext('2d');
+    spec = sctx.createImageData(cols, BINS);
+    scores = new Float32Array(cols);
+    flags = new Uint8Array(cols);
+    head = 0;
+    for (let i = 0; i < cols; i++) step();
+  }
+
+  const rand = Math.random;
+  let f0 = 9.5;
+  let event = null;
+  let nextEvent = 90;
+  let smooth = 0.1, lastGain = 0.8;
+
+  function newEvent() {
+    const types = ['tone', 'impact', 'drift'];
+    const type = types[(rand() * types.length) | 0];
+    return {
+      type, t: 0,
+      len: 26 + ((rand() * 40) | 0),
+      bin: 60 + rand() * 50,
+      gain: 0.62 + rand() * 0.33,
+      phase: rand() * 6.28,
+    };
+  }
+
+  window.__injectAnomaly = () => { forceEvent = true; };
+
+  function column(t) {
+    const col = new Float32Array(BINS);
+    for (let b = 0; b < BINS; b++) {
+      col[b] = 0.10 + 0.22 * Math.exp(-b / 40) + rand() * 0.10;
+    }
+    let f = f0 + Math.sin(t * 0.03) * 0.25;
+    let anomEnergy = 0;
+
+    if (event && event.type === 'drift') {
+      const p = Math.sin(Math.PI * event.t / event.len);
+      f += p * 3.2;
+      anomEnergy = p;
+    }
+    for (let h = 1; h <= 9; h++) {
+      const c = f * h;
+      if (c >= BINS) break;
+      const amp = 0.75 / Math.sqrt(h) * (0.9 + 0.1 * Math.sin(t * 0.07 + h));
+      for (let b = Math.max(0, (c - 3) | 0); b < Math.min(BINS, c + 3); b++) {
+        col[b] += amp * Math.exp(-((b - c) ** 2) / 1.2);
+      }
+    }
+    if (event) {
+      const p = Math.sin(Math.PI * event.t / event.len);
+      if (event.type === 'tone') {
+        const am = 0.6 + 0.4 * Math.sin(event.t * 0.9 + event.phase);
+        const c = event.bin + Math.sin(event.t * 0.2) * 1.5;
+        for (let b = 0; b < BINS; b++) {
+          col[b] += 0.95 * p * am * Math.exp(-((b - c) ** 2) / 2.0);
+          col[b] += 0.5 * p * am * Math.exp(-((b - c * 0.5) ** 2) / 1.5);
+        }
+        anomEnergy = p;
+      } else if (event.type === 'impact') {
+        if (event.t % 6 < 2) {
+          for (let b = 0; b < BINS; b++) col[b] += (0.55 + rand() * 0.35) * p * (0.6 + 0.4 * b / BINS);
+        }
+        anomEnergy = p;
+      }
+      event.t++;
+      if (event.t >= event.len) { event = null; nextEvent = 70 + ((rand() * 120) | 0); }
+    } else if (forceEvent || --nextEvent <= 0) {
+      event = newEvent();
+      forceEvent = false;
+    }
+    return { col, anomEnergy };
+  }
+
+  function step() {
+    const { col, anomEnergy } = column(frame++);
+    const g = event ? event.gain : lastGain;
+    if (event) lastGain = event.gain;
+    const raw = 0.08 + 0.05 * rand() + g * anomEnergy;
+    smooth = smooth * 0.6 + raw * 0.4;
+    const x = head;
+    scores[x] = Math.min(1, smooth);
+    flags[x] = scores[x] > THR ? 1 : 0;
+
+    const d = spec.data;
+    for (let b = 0; b < BINS; b++) {
+      let v = Math.log1p(col[b] * 2.2) / Math.log1p(2.2 * 1.7);
+      v = Math.max(0, Math.min(1, v));
+      const li = ((v * 255) | 0) * 3;
+      const y = BINS - 1 - b;
+      const i = (y * cols + x) * 4;
+      d[i] = LUT[li]; d[i + 1] = LUT[li + 1]; d[i + 2] = LUT[li + 2]; d[i + 3] = 255;
+    }
+    head = (head + 1) % cols;
+  }
+
+  const SCORE_H = 70;
+
+  function draw() {
+    sctx.putImageData(spec, 0, 0);
+    const specH = H - SCORE_H;
+    ctx.imageSmoothingEnabled = true;
+    ctx.clearRect(0, 0, W, H);
+
+    const a = cols - head;
+    ctx.drawImage(off, head, 0, a, BINS, 0, 0, a * COL_W, specH);
+    ctx.drawImage(off, 0, 0, head, BINS, a * COL_W, 0, head * COL_W, specH);
+
+    { const ctx = mctx; ctx.clearRect(0, 0, W, H);
+    let inSeg = false, sx = 0, peak = 0;
+    const segs = [];
+    for (let k = 0; k < cols; k++) {
+      const i = (head + k) % cols;
+      if (flags[i] && !inSeg) { inSeg = true; sx = k * COL_W; peak = 0; }
+      if (inSeg) peak = Math.max(peak, scores[i]);
+      if ((!flags[i] || k === cols - 1) && inSeg) {
+        inSeg = false; segs.push([sx, k * COL_W, peak]);
+      }
+    }
+    for (const [x0, x1, pk] of segs) {
+      const w = x1 - x0;
+      ctx.fillStyle = `rgba(${RED},0.16)`;
+      ctx.fillRect(x0, 0, w, specH);
+      ctx.strokeStyle = `rgba(${RED},0.85)`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x0 + .5, 0); ctx.lineTo(x0 + .5, specH);
+      ctx.moveTo(x1 - .5, 0); ctx.lineTo(x1 - .5, specH);
+      ctx.stroke();
+      ctx.fillStyle = `rgb(${RED})`;
+      ctx.fillRect(x0, specH - 4, w, 4);
+      if (w > 40) {
+        ctx.font = '600 11px JetBrains Mono, monospace';
+        const label = `ANOMALY ${pk.toFixed(2)}`;
+        const tw = ctx.measureText(label).width + 10;
+        const lx = x0 + Math.max(0, (w - tw) / 2);
+        ctx.fillStyle = `rgb(${RED})`;
+        ctx.fillRect(lx, 64, tw, 18);
+        ctx.fillStyle = '#12020a';
+        ctx.fillText(label, lx + 5, 77);
+      }
+    }
+
+    ctx.fillStyle = 'rgba(5,7,13,0.85)';
+    ctx.fillRect(0, specH, W, SCORE_H);
+    const sy = (s) => specH + SCORE_H - 10 - s * (SCORE_H - 20);
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(215,227,234,0.35)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, sy(THR)); ctx.lineTo(W, sy(THR)); ctx.stroke();
+    ctx.setLineDash([]);
+    for (let k = 1; k < cols; k++) {
+      const i0 = (head + k - 1) % cols, i1 = (head + k) % cols;
+      ctx.strokeStyle = scores[i1] > THR ? `rgb(${RED})` : 'rgba(95,227,192,0.9)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo((k - 1) * COL_W, sy(scores[i0]));
+      ctx.lineTo(k * COL_W, sy(scores[i1]));
+      ctx.stroke();
+    }
+    ctx.font = '10px JetBrains Mono, monospace';
+    ctx.fillStyle = 'rgba(125,143,160,0.9)';
+    ctx.fillText('anomaly score', W - 100, specH + 14);
+    ctx.fillText('thr 0.50', W - 60, sy(THR) - 4);
+    ctx.strokeStyle = 'rgba(215,227,234,0.5)';
+    ctx.beginPath(); ctx.moveTo(W - 1.5, 0); ctx.lineTo(W - 1.5, H); ctx.stroke();
+    }
+
+    const cur = scores[(head - 1 + cols) % cols];
+    scoreEl.textContent = cur.toFixed(2);
+    meterScore.textContent = cur.toFixed(2);
+    meterFill.style.width = `${Math.round(cur * 100)}%`;
+    meterFill.classList.toggle('hot', cur > THR);
+    const anom = cur > THR;
+    statusEl.textContent = anom ? 'ANOMALY' : 'NORMAL';
+    statusEl.classList.toggle('anom', anom);
+  }
+
+  let last = 0, acc = 0;
+  const FPS_COLS = 30;
+  function loop(ts) {
+    const dt = Math.min(100, ts - last); last = ts;
+    acc += dt;
+    while (acc > 1000 / FPS_COLS) { step(); acc -= 1000 / FPS_COLS; }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  addEventListener('resize', () => { resize(); draw(); });
+  resize();
+  draw();
+  if (!reduce) requestAnimationFrame((t) => { last = t; loop(t); });
+})();
+
+document.getElementById('pulseBtn').addEventListener('click', () => window.__injectAnomaly());
+document.getElementById('pulseBtn2').addEventListener('click', () => window.__injectAnomaly());
+document.getElementById('year').textContent = new Date().getFullYear();
+
+(() => {
+  const links = [...document.querySelectorAll('nav ul a')];
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(link => {
+        if (link.hash === '#' + entry.target.id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    });
+  }, { rootMargin: '-20% 0px -55% 0px', threshold: 0 });
+  document.querySelectorAll('main [id]').forEach(section => observer.observe(section));
+})();
+
+(() => {
+  const out = document.getElementById('termout');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lines = [
+    ['<span class="c-p">$</span> ', 'whoami', 'cmd'],
+    ['', '<span class="c-f">yangjanggu</span> <span class="c-d">— researcher · anomalous sound detection</span>', 'out'],
+    ['<span class="c-p">$</span> ', 'python detect.py --input fan_id07.wav', 'cmd'],
+    ['', '<span class="c-d">[load] 10.0s · 16 kHz · log-mel (128)</span>', 'out'],
+    ['', '<span class="c-d">[model] trained on normal data only</span>', 'out'],
+    ['', '<span class="c-d">[score] frames 0–312 ……… </span><span class="c-p">ok</span>', 'out'],
+    ['', '<span class="c-r">[!] anomaly @ 4.21s–5.08s · score 0.93 &gt; thr 0.50</span>', 'out'],
+    ['<span class="c-p">$</span> ', 'ls', 'cmd'],
+    ['', '<span class="c-f">about/  project/  publication/</span>', 'out'],
+  ];
+  if (reduce) {
+    out.innerHTML = lines.map(([p, t]) => p + t).join('\n') + '\n<span class="c-p">$</span> <span class="cursor"></span>';
+    return;
+  }
+  let html = '', li = 0;
+  const cursor = '<span class="cursor"></span>';
+  function next() {
+    if (li >= lines.length) { out.innerHTML = html + '<span class="c-p">$</span> ' + cursor; return; }
+    const [prefix, text, kind] = lines[li++];
+    if (kind === 'cmd') {
+      let i = 0;
+      const base = html + prefix;
+      (function type() {
+        out.innerHTML = base + text.slice(0, i) + cursor;
+        if (i++ < text.length) setTimeout(type, 38 + Math.random() * 40);
+        else { html = base + text + '\n'; setTimeout(next, 260); }
+      })();
+    } else {
+      html += prefix + text + '\n';
+      out.innerHTML = html + cursor;
+      setTimeout(next, 180);
+    }
+  }
+  setTimeout(next, 500);
+})();
 </script>
 </body>
 </html>
