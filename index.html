@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
+  <style>
   :root{
     --bg:#05070d;
     --fg:#d7e3ea;
@@ -36,7 +36,8 @@
     background:repeating-linear-gradient(0deg,#000 0 1px,transparent 1px 3px)}
 
   .hud{position:fixed;top:72px;right:24px;z-index:5;font-size:11px;color:var(--dim);text-align:right;line-height:1.6;
-       background:rgba(5,7,13,.55);border:1px solid var(--line);padding:10px 12px;border-radius:4px;backdrop-filter:blur(2px);
+       background:rgba(5,7,13,.55);border:1px solid var(--line);padding:10px 12px;border-radius:4px;
+       -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
        transition:opacity .35s ease, visibility .35s}
   .hud b{color:var(--fg);font-weight:500}
   .status{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);letter-spacing:.08em}
@@ -100,7 +101,7 @@
   .lede{color:var(--dim);max-width:560px;font-size:15px;margin-bottom:34px}
 
   .term{background:var(--panel);border:1px solid var(--line);border-radius:6px;max-width:620px;
-        box-shadow:0 20px 60px rgba(0,0,0,.45);backdrop-filter:blur(3px)}
+        box-shadow:0 20px 60px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
   .term-bar{display:flex;gap:7px;padding:10px 12px;border-bottom:1px solid var(--line);align-items:center}
   .term-bar i{width:10px;height:10px;border-radius:50%;background:#2a3542}
   .term-bar i:first-child{background:var(--alert)}
@@ -134,7 +135,7 @@
   .sec-h .n{color:var(--alert);font-size:13px}
   .sec-h h2{font-size:24px;font-weight:700}
   .sec-h .rule{flex:1;height:1px;background:var(--line)}
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:26px 28px;backdrop-filter:blur(3px)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:26px 28px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
   .panel p{color:var(--fg);max-width:720px}
   .panel p + p{margin-top:12px}
   .muted{color:var(--dim)}
@@ -147,9 +148,17 @@
     box-shadow:0 16px 40px rgba(0,0,0,.35);
   }
   .about-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:saturate(.92) contrast(1.02)}
+  .about-name{font-size:20px;font-weight:700;margin:0 0 4px}
+  .about-role{color:var(--accent);font-size:13px;letter-spacing:.04em;margin-bottom:16px}
+  .edu{list-style:none;margin:16px 0 0;padding:0;border-top:1px dashed var(--line)}
+  .edu li{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px}
+  .edu .deg{color:var(--alert);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  .edu .school{color:var(--fg)}
+  .edu .major{color:var(--dim);margin-top:2px}
+  .lab-link{display:inline-block;margin-top:14px;font-size:13px}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px;backdrop-filter:blur(3px);transition:border-color .2s,transform .2s}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);transition:border-color .2s,transform .2s}
   .card:hover{border-color:rgba(255,59,74,.55);transform:translateY(-2px);text-decoration:none}
   .card .tag{font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
   .card h3{font-size:16px;margin:8px 0 6px;color:var(--fg)}
@@ -181,9 +190,8 @@
     .about-photo{width:140px}
   }
   /* ---------- boot / loading screen ---------- */
-  body.is-booting #app,
-  body.is-mic-gate #app{opacity:0;visibility:hidden;pointer-events:none}
-  body.is-booting,body.is-mic-gate{cursor:default}
+  body.is-booting #app{opacity:0;visibility:hidden;pointer-events:none}
+  body.is-booting{cursor:default}
   #boot{
     position:fixed;inset:0;z-index:100;
     background:#000;color:#cfd8d3;
@@ -214,162 +222,11 @@
   }
   .boot-start button:hover{background:#e8f0eb;color:#05070d;transform:translateY(-1px)}
   .boot-start button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-
-  /* ---------- mic gate (after START) ---------- */
-  #micGate{
-    position:fixed;inset:0;z-index:90;
-    display:flex;align-items:center;justify-content:center;
-    background:
-      radial-gradient(ellipse at 50% 38%, rgba(95,227,192,.14), transparent 40%),
-      radial-gradient(ellipse at 50% 100%, rgba(0,0,0,.65), transparent 55%),
-      #05070d;
-    opacity:0;visibility:hidden;pointer-events:none;
-    transition:opacity .55s ease, visibility .55s;
-    overflow:hidden;
-    perspective:900px;
-  }
-  body.is-mic-gate #micGate{opacity:1;visibility:visible;pointer-events:auto}
-  #micGate.is-done{opacity:0;visibility:hidden;pointer-events:none}
-  .mic-stage{
-    position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:34px;
-    transform:translateY(18px) scale(.9);opacity:0;
-    transform-origin:50% 28%;
-    transition:transform .7s cubic-bezier(.2,.8,.2,1), opacity .55s ease;
-  }
-  body.is-mic-gate #micGate.is-ready .mic-stage{transform:translateY(0) scale(1);opacity:1}
-  body.is-mic-gate #micGate.is-entering .mic-stage{
-    transform:translateY(42vh) scale(28);
-    transition:transform 1.7s cubic-bezier(.55,0,.18,1);
-  }
-  body.is-mic-gate #micGate.is-entering .mic-hint{opacity:0;transition:opacity .2s}
-  body.is-mic-gate #micGate.is-entering .mic-rings{opacity:0;transition:opacity .15s}
-  .mic-tunnel{
-    position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;
-  }
-  body.is-mic-gate #micGate.is-entering .mic-tunnel{opacity:1}
-  .mic-tunnel i{
-    position:absolute;left:50%;top:38%;width:40px;height:40px;margin:-20px;
-    border:2px solid rgba(95,227,192,.55);border-radius:50%;
-    box-shadow:0 0 30px rgba(95,227,192,.25), inset 0 0 20px rgba(0,0,0,.5);
-    animation:tunnelIn 1.7s cubic-bezier(.55,0,.18,1) forwards;
-  }
-  .mic-tunnel i:nth-child(1){animation-delay:0s}
-  .mic-tunnel i:nth-child(2){animation-delay:.08s;border-color:rgba(215,227,234,.4)}
-  .mic-tunnel i:nth-child(3){animation-delay:.16s}
-  .mic-tunnel i:nth-child(4){animation-delay:.24s;border-color:rgba(255,59,74,.35)}
-  .mic-tunnel i:nth-child(5){animation-delay:.32s}
-  @keyframes tunnelIn{
-    0%{transform:scale(.2);opacity:0}
-    18%{opacity:.9}
-    100%{transform:scale(28);opacity:0;border-width:1px}
-  }
-  .mic-fade{
-    position:absolute;inset:0;z-index:4;pointer-events:none;
-    background:radial-gradient(circle at 50% 36%, rgba(5,7,13,0) 0%, rgba(5,7,13,0) 8%, #000 36%, #000 100%);
-    opacity:0;
-  }
-  body.is-mic-gate #micGate.is-entering .mic-fade{animation:micSuck 1.7s ease forwards}
-  @keyframes micSuck{
-    0%{opacity:0}
-    35%{opacity:.25}
-    70%{opacity:.75}
-    100%{opacity:1}
-  }
-  .mic-btn{
-    position:relative;border:0;background:transparent;cursor:pointer;padding:28px 36px 16px;
-    isolation:isolate;
-  }
-  .mic-btn:focus-visible{outline:2px solid var(--accent);outline-offset:10px}
-  .mic-btn:hover .mic{transform:translateY(-4px) scale(1.03)}
-  .mic-btn:hover .mic-head{
-    box-shadow:0 0 0 1px rgba(95,227,192,.45), 0 0 40px rgba(95,227,192,.28), inset 0 0 30px rgba(95,227,192,.08);
-  }
-  .mic-btn:hover .mic-rings span{animation-duration:.85s}
-  .mic-rings{
-    position:absolute;left:50%;top:34%;width:0;height:0;pointer-events:none;z-index:0;
-  }
-  .mic-rings span{
-    position:absolute;left:0;top:0;width:140px;height:140px;margin:-70px;
-    border:1px solid rgba(95,227,192,.4);border-radius:50%;
-    animation:ringPulse 2.2s ease-out infinite;
-  }
-  .mic-rings span:nth-child(2){animation-delay:.5s;width:190px;height:190px;margin:-95px}
-  .mic-rings span:nth-child(3){animation-delay:1s;width:240px;height:240px;margin:-120px}
-  @keyframes ringPulse{
-    0%{transform:scale(.5);opacity:.75}
-    100%{transform:scale(1.4);opacity:0}
-  }
-  .mic{
-    position:relative;z-index:1;width:148px;display:flex;flex-direction:column;align-items:center;
-    filter:drop-shadow(0 22px 36px rgba(0,0,0,.55));
-    transition:transform .25s ease;
-  }
-  .mic-head{
-    width:118px;height:168px;border-radius:59px;
-    background:
-      linear-gradient(90deg, rgba(255,255,255,.08), transparent 18%, transparent 82%, rgba(0,0,0,.28)),
-      linear-gradient(180deg, #3a4652 0%, #1b232c 45%, #0f141a 100%);
-    border:1px solid rgba(95,227,192,.28);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -20px 30px rgba(0,0,0,.35);
-    position:relative;overflow:hidden;
-    transition:box-shadow .25s;
-  }
-  .mic-mesh{
-    position:absolute;inset:14px 16px;
-    border-radius:48px;
-    background:
-      radial-gradient(circle at 50% 42%, rgba(95,227,192,.22), transparent 48%),
-      repeating-linear-gradient(0deg, rgba(215,227,234,.16) 0 1px, transparent 1px 7px),
-      repeating-linear-gradient(90deg, rgba(215,227,234,.12) 0 1px, transparent 1px 7px),
-      #12181f;
-    box-shadow:inset 0 0 24px rgba(0,0,0,.55);
-  }
-  .mic-mesh::after{
-    content:"";position:absolute;left:50%;top:42%;width:14px;height:14px;margin:-7px;
-    border-radius:50%;background:var(--accent);box-shadow:0 0 16px rgba(95,227,192,.8);
-  }
-  .mic-band{
-    position:absolute;left:8px;right:8px;top:58%;height:10px;border-radius:6px;
-    background:linear-gradient(180deg,#c9d5dd,#7f919e 55%,#586773);
-    box-shadow:0 2px 0 rgba(0,0,0,.35);
-  }
-  .mic-neck{
-    width:28px;height:54px;margin-top:-2px;
-    background:linear-gradient(90deg,#9aabb7,#d7e3ea 40%,#6f808c);
-    border-radius:0 0 8px 8px;
-    box-shadow:inset 2px 0 0 rgba(255,255,255,.25);
-  }
-  .mic-yoke{
-    width:78px;height:34px;margin-top:-8px;
-    border:10px solid #8fa0ac;border-top:none;border-radius:0 0 42px 42px;
-    box-sizing:border-box;
-    background:transparent;
-    filter:drop-shadow(0 2px 0 rgba(0,0,0,.25));
-  }
-  .mic-stand{
-    width:14px;height:72px;margin-top:-2px;
-    background:linear-gradient(90deg,#6d7d88,#c2ced6 45%,#5a6974);
-    border-radius:4px;
-  }
-  .mic-base{
-    width:96px;height:16px;margin-top:-2px;border-radius:10px;
-    background:linear-gradient(180deg,#2a333c,#12171d);
-    box-shadow:0 10px 24px rgba(0,0,0,.4);
-  }
-  .mic-hint{
-    text-align:center;color:var(--dim);font:13px/1.6 var(--mono);letter-spacing:.04em;
-    transition:opacity .3s;
-  }
-  .mic-hint b{color:var(--fg);font-weight:500}
-  .mic-hint .blink{display:inline-block;width:8px;height:14px;background:var(--accent);margin-left:6px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
-
-  #app{position:relative;z-index:4;height:100%;opacity:1;visibility:visible;transition:opacity .55s ease .05s}
+  #app{position:relative;z-index:4;height:100%;opacity:1;visibility:visible;-webkit-transition:opacity .55s ease .05s;transition:opacity .55s ease .05s}
 
   @media (prefers-reduced-motion:reduce){
-    .cursor{animation:none}
-    .card,.page,#boot,#app,#micGate,.mic-stage{transition:none}
-    .mic-rings span,.mic-tunnel i{animation:none;opacity:.2}
-    body.is-mic-gate #micGate.is-entering .mic-fade{animation:none;opacity:1}
+    .cursor{animation:none;-webkit-animation:none}
+    .card,.page,#boot,#app{transition:none;-webkit-transition:none}
   }
 </style>
 </head>
@@ -385,27 +242,6 @@
       <p>Click start to begin</p>
       <button type="button" id="startBtn">START</button>
     </div>
-  </div>
-</div>
-
-<div id="micGate" aria-hidden="true">
-  <div class="mic-tunnel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="mic-fade" aria-hidden="true"></div>
-  <div class="mic-stage">
-    <button class="mic-btn" id="micBtn" type="button" aria-label="Click the microphone to enter">
-      <div class="mic-rings" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="mic" aria-hidden="true">
-        <div class="mic-head">
-          <div class="mic-mesh"></div>
-          <div class="mic-band"></div>
-        </div>
-        <div class="mic-neck"></div>
-        <div class="mic-yoke"></div>
-        <div class="mic-stand"></div>
-        <div class="mic-base"></div>
-      </div>
-    </button>
-    <p class="mic-hint"><b>Click the microphone</b> to enter the lab<span class="blink"></span></p>
   </div>
 </div>
 
@@ -462,19 +298,49 @@
         <img src="assets/profile.jpeg" alt="Portrait of Minjun Kim" width="400" height="400">
       </div>
       <div>
+        <h3 class="about-name">Minjun Kim</h3>
+        <div class="about-role">Ph.D. Student · Chung-Ang University</div>
         <p>
-          Hi, I’m <b>Minjun Kim</b>. My main research focus is <b>anomalous sound detection</b>:
-          finding unusual events in machine and environmental audio, often when only normal data is available for training.
+          Hello, I’m <b>Minjun Kim</b>. I am currently a Ph.D. student in the Department of Smart City
+          at <b>Chung-Ang University</b>. My research focuses on <b>Artificial Intelligence</b>,
+          especially <b>Anomalous Sound Detection (ASD)</b> — learning what normal sounds like,
+          and detecting the moments that do not fit.
         </p>
         <p class="muted">
-          Interested in Artificial Intelligence, domain generalization, and unsupervised learning.
+          I am also interested in domain generalization and unsupervised learning, aiming to build
+          detectors that stay reliable when machines, environments, or recording conditions change.
+          I work with the AI·Statistics Lab.
         </p>
+        <ul class="edu">
+          <li>
+            <div class="deg">Ph.D.</div>
+            <div>
+              <div class="school">Chung-Ang University</div>
+              <div class="major">Department of Smart City · in progress</div>
+            </div>
+          </li>
+          <li>
+            <div class="deg">M.S.</div>
+            <div>
+              <div class="school">Chung-Ang University</div>
+              <div class="major">Department of Statistics &amp; Data Science</div>
+            </div>
+          </li>
+          <li>
+            <div class="deg">B.S.</div>
+            <div>
+              <div class="school">Hoseo University</div>
+              <div class="major">Department of Applied Statistics</div>
+            </div>
+          </li>
+        </ul>
         <div class="tags">
           <span>Artificial Intelligence</span>
           <span>Anomalous Sound Detection</span>
           <span>Domain Generalization</span>
           <span>Unsupervised Learning</span>
         </div>
+        <a class="lab-link" href="https://aistatlab.github.io/aistatlab-website/" target="_blank" rel="noopener">$ open lab website ↗</a>
       </div>
     </div>
   </section>
@@ -812,7 +678,8 @@
   if (!reduce) raf = requestAnimationFrame((t) => { last = t; loop(t); });
 })();
 
-document.getElementById('pulseBtn2').addEventListener('click', () => window.__injectAnomaly());
+const pulseBtn2 = document.getElementById('pulseBtn2');
+if (pulseBtn2) pulseBtn2.addEventListener('click', () => window.__injectAnomaly());
 
 (() => {
   const pages = [...document.querySelectorAll('.page')];
@@ -905,10 +772,7 @@ document.getElementById('pulseBtn2').addEventListener('click', () => window.__in
   const startWrap = document.getElementById('bootStart');
   const startBtn = document.getElementById('startBtn');
   const boot = document.getElementById('boot');
-  const micGate = document.getElementById('micGate');
-  const micBtn = document.getElementById('micBtn');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let entering = false;
 
   const lines = [
     'Minjun Kim Runtime · Anomalous Sound Detection',
@@ -924,59 +788,24 @@ document.getElementById('pulseBtn2').addEventListener('click', () => window.__in
     'Loaded interactive HUD ............... 89%',
     'Loaded portfolio pages ............... 100%',
     '',
-    'Press ESC to skip · ENTER / START to continue',
+    'Press ESC to skip · ENTER / START to enter',
   ];
 
-  function revealApp() {
-    document.body.classList.remove('is-booting', 'is-mic-gate');
-    boot.classList.add('is-done');
-    boot.setAttribute('aria-hidden', 'true');
-    micGate.classList.add('is-done');
-    micGate.setAttribute('aria-hidden', 'true');
-    if (typeof window.__startTerminal === 'function') window.__startTerminal();
-  }
-
-  function showMicGate() {
-    if (entering) return;
-    startBtn.blur();
-    boot.classList.add('is-done');
-    boot.setAttribute('aria-hidden', 'true');
+  function enterSite() {
     document.body.classList.remove('is-booting');
-    document.body.classList.add('is-mic-gate');
-    micGate.setAttribute('aria-hidden', 'false');
-    requestAnimationFrame(() => micGate.classList.add('is-ready'));
-    setTimeout(() => micBtn.focus(), 400);
+    boot.classList.add('is-done');
+    boot.setAttribute('aria-hidden', 'true');
+    if (typeof window.__startTerminal === 'function') window.__startTerminal();
+    startBtn.blur();
   }
 
-  function enterThroughMic() {
-    if (entering) return;
-    entering = true;
-    if (reduce) {
-      revealApp();
-      return;
-    }
-    micBtn.style.pointerEvents = 'none';
-    // force reflow so the entering transform always wins over ready state
-    void micGate.offsetWidth;
-    micGate.classList.add('is-entering');
-    setTimeout(revealApp, 1750);
-  }
-
-  startBtn.addEventListener('click', showMicGate);
-  micBtn.addEventListener('click', enterThroughMic);
-
+  startBtn.addEventListener('click', enterSite);
   addEventListener('keydown', (e) => {
-    if (document.body.classList.contains('is-booting')) {
-      if (e.key === 'Escape') { e.preventDefault(); showMicGate(); }
-      if ((e.key === 'Enter' || e.key === ' ') && startWrap.classList.contains('is-ready')) {
-        e.preventDefault();
-        showMicGate();
-      }
-      return;
-    }
-    if (document.body.classList.contains('is-mic-gate')) {
-      if (e.key === 'Escape') { e.preventDefault(); enterThroughMic(); }
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enterThroughMic(); }
+    if (!document.body.classList.contains('is-booting')) return;
+    if (e.key === 'Escape') { e.preventDefault(); enterSite(); }
+    if ((e.key === 'Enter' || e.key === ' ') && startWrap.classList.contains('is-ready')) {
+      e.preventDefault();
+      enterSite();
     }
   });
 
